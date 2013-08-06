@@ -4,4 +4,7 @@ require 'mysql'
 require 'json'
 require './app/classes/db.rb'
 
-puts 123
+sql = "select * from category"
+Db.new.query(sql).each_hash do |item|
+  puts item
+end

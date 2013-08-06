@@ -1,14 +1,14 @@
 #noinspection RubyResolve
 class Db
-  @host = 'localhost'
-  @db_user = 'root'
-  @db_password = '123456'
-  @db_name = 'sofa'
+  @@host = 'localhost'
+  @@db_user = 'root'
+  @@db_password = 'root'
+  @@db_name = 'dc211_en'
   @conn = nil
   @stmt = nil
 
   def initialize(attributes={})
-    @conn = Mysql.real_connect('localhost', 'root', '123456', 'sofa')
+    @conn = Mysql.real_connect(@@host, @@db_user, @@db_password, @@db_name)
     @stmt = @conn.stmt_init()
   end
 
