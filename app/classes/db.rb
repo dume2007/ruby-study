@@ -2,8 +2,8 @@
 class Db
   @@host = 'localhost'
   @@db_user = 'root'
-  @@db_password = 'root'
-  @@db_name = 'dc211_en'
+  @@db_password = '123456'
+  @@db_name = 'sofa'
   @conn = nil
   @stmt = nil
 
@@ -24,8 +24,14 @@ class Db
   end
 
   def add(table, data = {})
-    @stmt.prepare("insert into #{table}(name, addtime) values (?, ?)")
-    @stmt.execute(data[:name], data[:addtime])
+    sql_data = {:key => [], :value => [], :place => []}
+    data.each do |k, v|
+      sql_data[:key].push(k)
+      sql_data[:value].push("'#{v}'")
+    end
+    sql = "insert into #{table}(#{sql_data[:key].join(',')}) values (#{sql_data[:value].join(',')})"
+    @conn.query(sql)
+    @conn.affected_rows
   end
 
   def save(table, where, data = {})
